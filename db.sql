@@ -13,8 +13,6 @@ CREATE TABLE usuarios (
 );
 
 
-
-
 SELECT * FROM usuarios;
 
 -- Abrir terminal(2 bash)
