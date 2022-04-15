@@ -5,23 +5,21 @@ const { insertar, consultar, validar } = require('./consultas');
 
 const mensaje = async () => {
     alert('Usuario no encontrado')
-}
-
-
+};
 
 const port = 3000;
 
-// Crear servidor
+// CREAR SERVIDOR
 http
     .createServer(async (req, res) => {
-        // Ruta raíz
+        // RUTA RAÍZ
         if (req.url == "/" && req.method == "GET") {
             res.setHeader('content-type', 'text/html;charset=utf8')
             const html = fs.readFileSync('index.html', 'utf8')
             res.statusCode = 200;
             res.end(html);
 
-            // Ruta POST de url = '/usuario'
+            // RUTA POST DE URL = '/usuario'
         } else if ((req.url == "/usuario" && req.method == "POST")) {
             try {
                 let body = "";
@@ -39,7 +37,7 @@ http
                 showError(error, res);
             }
 
-            // Ruta GET de url = '/usuarios'
+            // RUTA GET DE URL = '/usuarios'
         } else if (req.url == "/usuarios" && req.method == "GET") {
             try {
                 const registros = await consultar();
@@ -48,15 +46,13 @@ http
             } catch (error) {
                 showError(error, res);
             }
-            // Ruta PUT de url = '/usuario'
+            // RUTA PUT DE URL = '/usuario'
         }
         else if (req.url == '/login' && req.method == "POST") {
-
             try {
                 let body = "";
                 req.on('data', (chunk) => {
                     body += chunk;
-
                 });
 
                 req.on("end", async () => {
@@ -71,23 +67,21 @@ http
                         res.statusMessage = 'Not found';
                         res.end('Usuario no encontrado.')
                     }
-
                 });
 
             } catch (error) {
                 res.statusCode = 404;
                 res.statusMessage = 'Not found';
                 res.end('Usuario no encontrado.')
-            }
+            };
 
         } else {
             res.statusCode = 404;
             const respuesta = 'Recurso no encontrado.';
             console.log(respuesta);
             res.end(respuesta);
-        }
+        };
     })
-
 
     .listen(port, () => console.log('Conectado al puerto:', port));
 
@@ -96,4 +90,4 @@ const showError = (error, res) => {
     console.log(error.code);
     res.statusCode = 500;
     res.end(JSON.stringify(error));
-}
+};
