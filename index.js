@@ -19,6 +19,13 @@ http
             res.statusCode = 200;
             res.end(html);
 
+
+        } else if (req.url == "/estilos.css" && req.method === "GET") {
+            res.setHeader('content-type', 'text/css;charset=utf8')
+            const estilo = fs.readFileSync('estilos.css', 'utf8')
+            res.statusCode = 200;
+            res.end(estilo);
+
             // RUTA POST DE URL = '/usuario'
         } else if ((req.url == "/usuario" && req.method == "POST")) {
             try {
